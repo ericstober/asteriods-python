@@ -9,6 +9,12 @@ def main():
     # Initialize pygame
     pygame.init()
 
+    # Create new clock object
+    clock = pygame.time.Clock()
+
+    # Delta time
+    dt = 0
+
     # Get new instance of GUI window
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
@@ -20,11 +26,14 @@ def main():
             if event.type == pygame.QUIT:
                 return
 
-        # fill screen with solid black
+        # Fill screen with solid black
         screen.fill("black")
 
-        # refresh the screen
+        # Refresh the screen
         pygame.display.flip()
+
+        # Set delta time
+        dt = clock.tick(60) / 1000
 
 if __name__ == "__main__":
     main()

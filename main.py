@@ -31,17 +31,20 @@ def main():
             if event.type == pygame.QUIT:
                 return
 
+        # Set delta time
+        dt = clock.tick(60) / 1000
+
         # Fill screen with solid black
         screen.fill("black")
 
-        # re-render players each frame
+        # Update player direction
+        player.update(dt)
+
+        # Re-render player each frame
         player.draw(screen)
 
         # Refresh the screen
         pygame.display.flip()
-
-        # Set delta time
-        dt = clock.tick(60) / 1000
 
 
 if __name__ == "__main__":

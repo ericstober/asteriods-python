@@ -21,6 +21,15 @@ def main():
     # Create the main game window (surface) with configured dimensions
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+    # Create empty group to hold all the objects that can be updated
+    updatable = pygame.sprite.Group()
+
+    # Create empty group to hold all the object that can be drawn
+    drawable = pygame.sprite.Group()
+
+    # Add the Player class to the updatable and drawable groups
+    Player.containers = (updatable, drawable)
+
     # Create the player at the center of the screen
     player = Player(x=SCREEN_WIDTH / 2, y=SCREEN_HEIGHT / 2)
 
@@ -41,11 +50,12 @@ def main():
         # Clear the screen by filling it with black
         screen.fill("black")
 
-        # Update player state (movement and rotation based on input)
-        player.update(dt)
+        # Update all updatable objects state (movement and rotation based on input)
+        updatable.update(dt)
 
-        # Draw the player to the screen
-        player.draw(screen)
+        # Draw all of the drawable objects
+        for object in drawable:
+            object.draw(screen)
 
         # Update the full display surface to the screen
         pygame.display.flip()

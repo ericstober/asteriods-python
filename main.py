@@ -1,7 +1,9 @@
+import sys
 import pygame
 from constants import SCREEN_HEIGHT
 from constants import SCREEN_WIDTH
 from logger import log_state
+from logger import log_event
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
@@ -66,6 +68,12 @@ def main():
 
         # Update all updatable objects state (movement and rotation based on input)
         updatable.update(dt)
+
+        for asteroid in asteroids:
+            if asteroid.collides_with(player):
+                log_event("player_hit")
+                print("Game over!")
+                sys.exit()
 
         # Draw all of the drawable objects
         for object in drawable:

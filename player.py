@@ -8,6 +8,7 @@ from constants import (
     LINE_WIDTH,
     PLAYER_TURN_SPEED,
     PLAYER_SPEED,
+    PLAYER_SHOOT_COOLDOWN_SECONDS,
 )
 
 
@@ -20,6 +21,9 @@ class Player(CircleShape):
 
         # Current rotation angle of the player
         self.rotation = 0
+
+        # Create shot cooldown timer
+        self.shot_cooldown_timer = 0
 
     def triangle(self):
         ## Calculates the three points of the triangular ship shape based on the player's position and rotation.
@@ -72,7 +76,14 @@ class Player(CircleShape):
 
         # Shoot
         if keys[pygame.K_SPACE]:
-            self.shoot()
+            if self.shot_cooldown_timer > 0:
+                return
+            else:
+                self.shot_cooldown_timer = PLAYER_SHOOT_COOLDOWN_SECONDS
+                self.shoot()
+
+        # Decrease the shoot timer
+        self.shot_cooldown_timer -= dt
 
     def move(self, dt):
         ## Moves the player in the direction it is currently facing.

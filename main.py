@@ -1,12 +1,11 @@
 import sys
 import pygame
-from constants import SCREEN_HEIGHT
-from constants import SCREEN_WIDTH
-from logger import log_state
-from logger import log_event
+from constants import SCREEN_HEIGHT, SCREEN_WIDTH
+from logger import log_state, log_event
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from shot import Shot
 
 
 def main():
@@ -34,6 +33,9 @@ def main():
     # Create empty group to hold all the asteriods
     asteroids = pygame.sprite.Group()
 
+    # Create empty group to hold all the shots
+    shots = pygame.sprite.Group()
+
     # Add the Player class to the updatable and drawable groups
     Player.containers = (updatable, drawable)
 
@@ -42,6 +44,9 @@ def main():
 
     # Add the AsteriodField class to the updatable group
     AsteroidField.containers = updatable
+
+    # Add the Shot class to the shots, updatable, and drawable groups
+    Shot.containers = (shots, updatable, drawable)
 
     # Create the player at the center of the screen
     player = Player(x=SCREEN_WIDTH / 2, y=SCREEN_HEIGHT / 2)

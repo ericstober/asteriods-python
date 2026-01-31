@@ -75,11 +75,16 @@ def main():
         updatable.update(dt)
 
         for asteroid in asteroids:
+            # Check if this asteroid has collided with the player.
+            # If so, log the 'player_hit' event, print a message and exit the game.
             if asteroid.collides_with(player):
                 log_event("player_hit")
                 print("Game over!")
                 sys.exit()
 
+            # Check collisions between this asteroid and every active shot.
+            # On collision, log 'asteroid_shot' and remove both sprites.
+            # sprite.kill() removes a sprite from all Groups it belongs to.
             for shot in shots:
                 if asteroid.collides_with(shot):
                     log_event("asteroid_shot")
